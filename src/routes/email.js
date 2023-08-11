@@ -1,16 +1,13 @@
 const express = require("express");
-require("dotenv").config();
+const router = express.Router();
+const htmlContent = require("../templates/template");
 const SibApiV3Sdk = require('sib-api-v3-sdk');
-const htmlContent = require("./templates/template");
-const app = express();
-
-app.use(express.json());
 
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = process.env.EMAIL_API_KEY;
 
-app.post('/email', async (req, res) => {
+router.post('/email', async (req, res) => {
     const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
     const sender = {
         email: process.env.EMAIL,
@@ -39,6 +36,4 @@ app.post('/email', async (req, res) => {
     }
 });
 
-app.listen("3000", () => {
-    console.log("server started");
-});
+module.exports = router;
