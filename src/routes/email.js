@@ -10,13 +10,13 @@ apiKey.apiKey = process.env.EMAIL_API_KEY;
 router.post('/email', async (req, res) => {
     const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
     const sender = {
-        email: process.env.EMAIL,
+        email: process.env.EMAIL_REMITTER,
         name: process.env.EMAIL_NAME,
     };
 
     const receivers = [
         {
-            email: req.body.email,
+            email: req.body.recipient,
         },
     ];
 
@@ -24,8 +24,8 @@ router.post('/email', async (req, res) => {
         const sendMail = await apiInstance.sendTransacEmail({
             sender,
             to: receivers,
-            subject: "Test Email From Brevo",
-            textContent: "Test Email",
+            subject: req.body.subject,
+            textContent: req.body.content,
             htmlContent,
         });
         
