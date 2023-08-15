@@ -3,10 +3,8 @@ require("dotenv").config();
 
 const app = express();
 
-// Middleware para análise de corpo JSON
 app.use(express.json());
 
-// Importar as rotas do arquivo ./routes/email.js
 const emailRoutes = require("./routes/email");
 app.use(emailRoutes);
 
